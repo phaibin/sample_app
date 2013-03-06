@@ -1,13 +1,16 @@
 source 'http://ruby.taobao.org'
 
 gem 'rails', '3.2.12'
+gem 'pg'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :development, :test do
-  gem 'sqlite3'
   gem 'rspec-rails'
+  gem 'guard-rspec'
+  gem 'guard-spork'
+  gem 'spork'
 end
 
 
@@ -42,8 +45,6 @@ gem 'jquery-rails'
 
 group :test do
   gem 'capybara', '1.1.4'
-end
-
-group :production do
-  gem 'pg'
+  gem 'rb-fsevent', :require => false
+  gem 'growl'
 end
