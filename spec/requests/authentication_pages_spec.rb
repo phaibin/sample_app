@@ -48,6 +48,12 @@ describe "AuthenticationPages" do
     describe "for non-signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
 
+      describe "in the home page" do
+        before { visit root_path }
+        it { should_not have_link('Profile', href: user_path(user)) }
+        it { should_not have_link('Settings', href: edit_user_path(user)) }
+      end
+
       describe "in the Users controller" do
         describe "visiting the edit page" do
           before { visit edit_user_path(user) }
@@ -93,6 +99,16 @@ describe "AuthenticationPages" do
 
       describe "submitting a PUT request to the Users#update action" do
         before { put user_path(wrong_user) }
+        specify { response.should redirect_to(root_path) }
+      end
+
+      describe "visiting sign up page" do
+        before { visit signup_path }
+        it { should_not have_selector('title', text: full_title('Sign up')) }
+      end
+
+      describe "submitting a POST request to the User#create action" do
+        before { post users_path }
         specify { response.should redirect_to(root_path) }
       end
     end
